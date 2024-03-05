@@ -9,18 +9,17 @@ const paperStyle = {
     height:'75%'
 }
 export default function BasicButtons() {
-    const [ response, setResponse ] = useState('');
+    const [ response, setResponse ] = useState({});
 
     const handleCLick = async () => {
 
         const res = await fetch('/.netlify/functions/hello-world')
             .then(response => response.json())
-            .then(json => JSON.stringify(json))
             .catch(e => console.log(e))
 
-        console.log('response',response)
+        console.log('response',res)
 
-        setResponse(res || 'No Go')
+        setResponse(res)
 
     }
 
