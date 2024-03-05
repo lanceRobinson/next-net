@@ -9,12 +9,19 @@ const paperStyle = {
     height:'75%'
 }
 export default function BasicButtons() {
-    const [ response, setResponse ] = useState({});
+    const [ response, setResponse ] = useState('');
 
-    const handleCLick = () => {
-        fetch('/.netlify/functions/hello-world')
-            .then(response => setResponse(response.json())
-            )
+    const handleCLick = async () => {
+
+        const res = await fetch('/.netlify/functions/hello-world')
+            .then(response => response.json())
+            .then(json => JSON.stringify(json))
+            .catch(e => console.log(e))
+
+        console.log('response',response)
+
+        setResponse(res || 'No Go')
+
     }
 
     return (
@@ -24,7 +31,7 @@ export default function BasicButtons() {
                     {JSON.stringify(response)}
                 </Typography>
             </Paper>
-            <Button variant="contained" onClick={handleCLick}>Run Function</Button>
+            <Button variant="contained" onClick={() => handleCLick()}>Run Function</Button>
         </Box>
     );
 }
